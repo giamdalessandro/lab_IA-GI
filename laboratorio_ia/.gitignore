@@ -1,0 +1,5 @@
+*.save
+/*/*.bin
+*.bin
+*.swp
+*.ipch

@@ -1,0 +1,3 @@
+add_executable(odom_laser_node odom_laser_node.cpp)
+target_link_libraries(odom_laser_node odom_laser_library odom_laser_utils ${catkin_LIBRARIES})
+

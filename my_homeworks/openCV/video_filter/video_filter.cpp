@@ -1,0 +1,78 @@
+#include "video_filter.h"
+
+cv::Mat dst, dst2;
+int edgeThresh = 1;
+int lowThreshold;
+int const max_lowThreshold = 100;
+int ratio = 3;
+int kernel_size = 3;
+
+
+cv::Mat gaussianSmoothing(cv::Mat frame, image_transport::Publisher& pub) {
+  if(frame.empty()) {
+    std::cerr << "[GSMOOTH]: Error opening video frame" << std::endl;
+  }
+  float gaussian_stddev = 10.0;
+  cv::Mat gaussian_blurred_img;
+  cv::GaussianBlur(frame, gaussian_blurred_img, cv::Size(0,0), gaussian_stddev);
+
+  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", gaussian_blurred_img).toImageMsg();
+  pub.publish(msg);
+
+  std::cerr << "[GSMOOTH]: Frame gauss filtered" << std::endl;
+  return gaussian_blurred_img;
+}
+
+
+cv::Mat sobelFilter(cv::Mat frame, image_transport::Publisher& pub) {
+  if(frame.empty()) {
+    std::cerr << "[SOBEL]: Error opening video frame" << std::endl;
+  }
+  cv::Mat gaussian_blurred_img, box_blurred_img, frame_gray;
+  cv::GaussianBlur(frame, gaussian_blurred_img, cv::Size(3,3), 0, 0, cv::BORDER_DEFAULT);
+  cv::cvtColor(gaussian_blurred_img, frame_gray, cv::COLOR_BGR2GRAY);
+
+  cv::Mat grad_x, grad_y, abs_grad_x, abs_grad_y, gradient_mag_img, binary_img;
+  int ddepth= CV_16S, ksize= 1, scale= 1,  delta= 0;
+  // Compute the image derivatives along x and y using Sobel
+  cv::Sobel(frame_gray, grad_x, ddepth, 1, 0, ksize, scale, delta, cv::BORDER_DEFAULT);
+  cv::Sobel(frame_gray, grad_y, ddepth, 0, 1, ksize, scale, delta, cv::BORDER_DEFAULT);
+  // converting back to CV_8U
+  cv::convertScaleAbs(grad_x, abs_grad_x);
+  cv::convertScaleAbs(grad_y, abs_grad_y);
+  cv::addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, gradient_mag_img);
+
+  cv::cvtColor(gradient_mag_img, gradient_mag_img, cv::COLOR_GRAY2BGR);
+  // Binarize the image
+  cv::threshold(gradient_mag_img, binary_img, 10, 255, 1);//cv::THRESH_BINARY);
+
+  dst= binary_img;
+  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", dst).toImageMsg();
+  pub.publish(msg);
+
+  std::cerr << "[SOBEL]: Frame gauss filtered" << std::endl;
+  return dst;
+}
+
+
+cv::Mat cannyEdges(cv::Mat frame, image_transport::Publisher& pub) {
+  if(frame.empty()) {
+    std::cerr << "[CEDGES]: Error opening video frame" << std::endl;
+  }
+  cv::Mat detected_edges, src_gray, src= frame;
+  cv::cvtColor(src, src_gray, cv::COLOR_BGR2GRAY);
+  
+  cv::blur(src_gray, detected_edges, cv::Size(3,3));
+  cv::Canny(detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size);
+  
+  /// Using Canny's output as a mask, we display our result
+  dst2 = cv::Scalar::all(0);
+  src.copyTo(dst2, detected_edges);
+  
+  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", dst2).toImageMsg();
+  pub.publish(msg);
+ 
+  std::cerr << "[CEDGES]: Frame canny filtered" << std::endl;
+  return dst2;
+}
+

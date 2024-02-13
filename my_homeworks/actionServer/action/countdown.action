@@ -1,0 +1,10 @@
+# Goal
+float32 target_angle            # target_angle [DEG]
+string absolute_relative_flag   # flag ABS/REL
+float32 max_ang_vel             # max angular velocity [DEG/s]
+---
+# Result
+string result
+---
+# Feedback
+string feedback

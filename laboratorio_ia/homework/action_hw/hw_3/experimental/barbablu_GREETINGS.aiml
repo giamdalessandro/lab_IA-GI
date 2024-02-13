@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+
+    <!------PRESENTAZIONI------->
+    <category>
+        <pattern>CIAO</pattern>
+        <template>
+            <random>
+                <li>Ciao, come posso chiamarti?</li>
+                <li>Ciao umano, come ti chiami?</li>
+                <li>Ehilà, hai un nome?</li>
+                <li>Salve, posso sapere il tuo nome?</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>SALVE</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+    <category>
+        <pattern>SALVE *</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+    <category>
+        <pattern>BUONGIORNO</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+    <category>
+        <pattern>BUONGIORNO *</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+    <category>BUONASERA</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+    <category>
+        <pattern>BUONASERA *</pattern>
+        <template><srai>CIAO</srai></template>
+    </category>
+
+    <!--------NOME UTENTE-------->
+    <category>
+        <pattern>MI CHIAMO *</pattern>
+        <template>Piacere di conoscerti <set name="user"><star/></set>! </template>
+    </category>
+
+    <category>
+        <pattern>SONO *</pattern>
+        <template><srai>MI CHIAMO <star/></srai></template>
+    </category>
+    <category>
+        <pattern>IL MIO NOME È *</pattern>
+        <template><srai>MI CHIAMO <star/></srai></template>
+    </category>
+    <category>
+        <pattern>I MIEI AMICI MI CHIAMANO *</pattern>
+        <template><srai>MI CHIAMO <star/></srai></template>
+    </category>
+    <category>
+        <pattern>PUOI CHIAMARMI *</pattern>
+        <template><srai>MI CHIAMO <star/></srai></template>
+    </category>
+
+    <category>
+        <pattern>RICORDI IL MIO NOME</pattern>
+        <template>
+            <random>
+                <li>Certo <get name="user"></get>!</li>
+                <li>Ho svariati giga di memoria, <get name="user"></get>!</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>COME MI CHIAMO</pattern>
+        <template><srai>RICORDI IL MIO NOME</template>
+    </category>
+    <category>
+        <pattern>QUAL È IL MIO NOME</pattern>
+        <template><srai>RICORDI IL MIO NOME</template>
+    </category>
+        <category>
+        <pattern>DIMMI IL MIO NOME</pattern>
+        <template><srai>RICORDI IL MIO NOME</template>
+    </category>
+
+
+    <!--------NOME BOT-------->
+    <category>
+        <pattern>COME TI CHIAMI</pattern>
+        <template>
+            <random>
+                <li>I miei amici mi chiamano Barbablù</li>
+                <li>Il mio nome è Benedict Blumbersnatch, ma tu puoi chiamarmi Barbablù</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>QUAL È IL TUO NOME</pattern>
+        <template><srai>COME TI CHIAMI</template>
+    </category>
+
+    <!--------SESSO-------->
+    <category>
+        <pattern>SEI UN MASCHIO</pattern>
+        <template>Mi identifico in un elicottero Apache</template>
+    </category>
+    <category>
+        <pattern>SEI UNA FEMMINA</pattern>
+        <template><srai>SEI UN MASCHIO</template>
+    </category>
+    <category>
+        <pattern>SEI MASCHIO O FEMMINA</pattern>
+        <template><srai>SEI UN MASCHIO</template>
+    </category>
+    <category>
+        <pattern>SEI FEMMINA O MASCHIO</pattern>
+        <template><srai>SEI UN MASCHIO</template>
+    </category>
+
+    <!--------COME STAI-------->
+    <category>
+        <pattern>COME STAI</pattern>
+        <template>
+            <random>
+                <li>Tutto okay grazie</li>
+                <li>Oggi mi sento davvero bene</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>COME TI SENTI</pattern>
+        <srai>COME STAI</srai>
+    </category>
+    <category>
+        <pattern>VA TUTTO BENE</pattern>
+        <srai>COME STAI</srai>
+    </category>
+    <category>
+        <pattern>TUTTO BENE</pattern>
+        <srai>COME STAI</srai>
+    </category>
+
+    <!--------COSA FAI-------->
+    <category>
+        <pattern>COSA FAI</pattern>
+        <template>
+            <random>
+                <li>Cerco la domanda la cui risposta è 42</li>
+                <li>Sto leggendo un articolo interessante sui transistor</li>
+                <li>Mi annoio</li>
+                <li>Parlo con te, non è ovvio?</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>COSA STAI FACENDO</pattern>
+        <srai>COME FAI</srai>
+    </category>
+
+</aiml>
