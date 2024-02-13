@@ -1,3 +1,0 @@
-add_executable(laser_mapper_position_node laser_mapper_position_node.cpp)
-target_link_libraries(laser_mapper_position_node mapper_position_library mapper_utils ${catkin_LIBRARIES})
-

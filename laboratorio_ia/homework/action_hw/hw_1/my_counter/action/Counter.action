@@ -1,5 +1,0 @@
-int32   timeout
----
-int8    result
----
-int32   current
