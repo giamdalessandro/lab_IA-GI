@@ -9,3 +9,14 @@ cd <working-dir>
 git clone https://gitlab.com/srrg-software/srrg2_orazio.git
 git pull
 ```
+
+## GDB E Debug
+Per avviare `gdb` da `rosrun` usare il comando:
+```s
+rosrun --prefix 'gdb -ex run --args' laser_mapper laser_mapper_node
+```
+
+e per compilare con l'opzione `-g`
+```s
+catkin build laser_mapper --cmake-args -DCMAKE_BUILD_TYPE=Debug
+``` 
